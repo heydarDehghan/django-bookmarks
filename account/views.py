@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from account.forms import LoginForm
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -27,4 +27,9 @@ def user_login(request):
             return HttpResponse('invalid login')
     else:
         form = LoginForm()
+
         return render(request, 'account/login.html', {'form': form})
+
+@login_required
+def dashboard(request):
+    return render(request, 'account/dashboard.html', {'section':'dashboard'})
